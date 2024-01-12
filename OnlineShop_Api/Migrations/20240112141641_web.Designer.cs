@@ -12,8 +12,8 @@ using OnlineShop_Api.Data;
 namespace OnlineShop_Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240112100141_init")]
-    partial class init
+    [Migration("20240112141641_web")]
+    partial class web
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

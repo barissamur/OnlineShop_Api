@@ -10,7 +10,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// eklendi
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", builder =>
+    {
+        builder.AllowAnyOrigin() // Ýzin vermek istediðiniz kökenleri buraya ekleyin
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -21,7 +35,7 @@ builder.Services.AddSwaggerGen(options =>
     });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-// eklendi
+
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -41,6 +55,9 @@ if (app.Environment.IsDevelopment())
 }
 
 //eklendi
+app.UseCors("AllowAllOrigins"); // ConfigureServices'da tanýmladýðýnýz CORS politikasýnýn adýný buraya ekleyin
+
+
 app.MapIdentityApi<IdentityUser>();
 
 //
