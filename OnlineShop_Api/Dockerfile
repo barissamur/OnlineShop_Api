@@ -1,25 +1,24 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+# SDK Image kullanarak build ortamýný oluþtur
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
-EXPOSE 2020
-EXPOSE 2021
+EXPOSE 8080
+EXPOSE 8081
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["OnlineShop_Api/OnlineShop_Api.csproj", "OnlineShop_Api/"]
-RUN dotnet restore "./OnlineShop_Api/./OnlineShop_Api.csproj"
-COPY . .
-WORKDIR "/src/OnlineShop_Api"
-RUN dotnet build "./OnlineShop_Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+# csproj dosyasýný ve restore iþlemini çalýþtýr
+COPY *.csproj ./
+RUN dotnet restore
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./OnlineShop_Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+# Uygulama dosyalarýný kopyala
+COPY . ./
 
-FROM base AS final
+# Uygulamayý build ve publish et
+RUN dotnet publish -c Release -o out
+
+# Runtime Image kullanarak final ortamýný oluþtur
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "OnlineShop_Api.dll"]
+COPY --from=build-env /app/out .
+
+# Uygulamayý çalýþtýr
+# Uygulamanýzýn adý TestApi.dll ise bu kýsmý deðiþtirmeyin, eðer farklýysa doðru adý girin.
+ENTRYPOINT ["dotnet", "TestApi.dll"]
