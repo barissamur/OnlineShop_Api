@@ -13,6 +13,8 @@ builder.Services.AddControllers();
 
 // eklendi
 
+builder.WebHost.UseUrls("http://*:2020");
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", builder =>
@@ -61,7 +63,7 @@ app.UseCors("AllowAllOrigins"); // ConfigureServices'da tanýmladýðýnýz CORS poli
 app.MapIdentityApi<IdentityUser>();
 
 //
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
