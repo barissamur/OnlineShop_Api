@@ -43,7 +43,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddAuthorization();
 
-
+ 
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
     .AddEntityFrameworkStores<DataContext>();
 
