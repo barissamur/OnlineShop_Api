@@ -1,8 +1,8 @@
 # SDK Image kullanarak build ortamýný oluþtur
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 2020
+EXPOSE 2021
 
 # csproj dosyasýný ve restore iþlemini çalýþtýr
 COPY *.csproj ./
