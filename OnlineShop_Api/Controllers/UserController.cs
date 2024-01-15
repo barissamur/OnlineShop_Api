@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineShop_Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -15,7 +14,7 @@ namespace OnlineShop_Api.Controllers
             this.signInManager = signInManager;
         }
 
-        [HttpGet]
+        [HttpGet("/logout")]
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();
