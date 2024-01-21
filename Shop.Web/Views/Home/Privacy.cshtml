@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<form method="post">
+    <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+    </div>
+    <div>
+        <input type="hidden" name="useCookies" value="true" />
+        <button type="submit">Login</button>
+    </div>
+</form>

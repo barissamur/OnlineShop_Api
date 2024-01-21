@@ -24,9 +24,7 @@ builder.Services.AddCors(options =>
                .AllowAnyMethod();
     });
 });
-
-builder.Services.AddEndpointsApiExplorer();
-
+ 
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -35,14 +33,15 @@ builder.Services.AddSwaggerGen(options =>
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey
     });
-    options.OperationFilter<SecurityRequirementsOperationFilter>();
+    //options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddAuthorization();
+builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddAuthorization();
  
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
     .AddEntityFrameworkStores<DataContext>();
