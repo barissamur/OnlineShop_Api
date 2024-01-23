@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,14 @@ namespace OnlineShop_Api.Controllers
         {
             await signInManager.SignOutAsync();
 
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("/SSw")]
+
+        public IActionResult SSw()
+        {
             return Ok();
         }
     }

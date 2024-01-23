@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Shop.Web;
 using Shop.Web.Models;
 using System.Diagnostics;
-using System.Net.Http;
+using System.Security.Permissions;
 using System.Text;
 
 namespace Shop.Web.Controllers;
@@ -40,25 +41,35 @@ public class HomeController : Controller
             { "password", password }
         };
 
-        //var json = JsonConvert.SerializeObject(loginData);
-
         var json = JsonConvert.SerializeObject(data);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await client.PostAsync("https://localhost:44350/login?useCookies=true", content);
+        var response = await client.PostAsync("http://localhost:44350/login?useCookies=true", content);
 
-        if (response.IsSuccessStatusCode)
-        {
-            // Baþarýlý iþlem
-            // Gerekli yönlendirme veya iþlemleri burada yapýn
-        }
+        string cookie = response.Headers.NonValidated["Set-Cookie"].ToString();
+        string[] sa = cookie.Split('=');
+
+        SetCookie("Security", sa[1].Split(';')[0], 90);
+
+        return View();
+    }
+
+    private void SetCookie(string key, string value, int? expireTime)
+    {
+        CookieOptions option = new CookieOptions();
+
+        if (expireTime.HasValue)
+            option.Expires = DateTime.Now.AddMinutes(expireTime.Value);
         else
-        {
-            // Hata durumu
-            // Kullanýcýya hata mesajý göster
-        }
+            option.Expires = DateTime.Now.AddMilliseconds(10); // Örnek olarak çok kýsa bir süre
 
+        Response.Cookies.Append(key, value, option);
+    }
+
+    [Security]
+    public IActionResult Test()
+    {
         return View();
     }
 
