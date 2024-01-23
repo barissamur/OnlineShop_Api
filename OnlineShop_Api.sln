@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{70B4CF11-BA2F-4758-BC75-E930CF5FBBEB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GetAssetsService", "GetAssetsService", "{1795391B-3DFA-42B1-80B0-6053D1912D13}"
+	ProjectSection(SolutionItems) = preProject
+		src\Services\GetAssestsService\main.py = src\Services\GetAssestsService\main.py
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
