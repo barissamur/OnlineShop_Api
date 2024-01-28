@@ -53,14 +53,14 @@ builder.Services.AddIdentityApiEndpoints<IdentityUser>()
 //event bus ayarlarý 
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<TestMessageConsumer>();
+    //x.AddConsumer<TestMessageConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host("rabbitmq://localhost");
         cfg.ReceiveEndpoint("test-message-queue", e =>
         {
-            e.ConfigureConsumer<TestMessageConsumer>(context);
+            //e.ConfigureConsumer<TestMessageConsumer>(context);
         });
     });
 });
