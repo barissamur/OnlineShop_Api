@@ -1,7 +1,11 @@
+using EventBus;
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Microsoft.OpenApi.Models;
 using OnlineShop_Api.Data;
+using OnlineShop_Api.Messages;
 using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +28,7 @@ builder.Services.AddCors(options =>
                .AllowAnyMethod();
     });
 });
- 
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -42,13 +46,37 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAuthorization();
- 
+
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
     .AddEntityFrameworkStores<DataContext>();
 
+//event bus ayarlarý 
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<TestMessageConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("rabbitmq://localhost");
+        cfg.ReceiveEndpoint("test-message-queue", e =>
+        {
+            e.ConfigureConsumer<TestMessageConsumer>(context);
+        });
+    });
+});
+
+
+builder.Services.AddSingleton<IEventBus, RabbitMQEventBus>();
+builder.Services.AddSingleton<IEventBus, AzureServiceBusEventBus>();
+
+
+// log ayarlarý
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
 //
 var app = builder.Build();
-  
+
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();
