@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop_Api", "OnlineShop_Api\OnlineShop_Api.csproj", "{D0AE0F9F-2B1C-4A25-B06D-1541827C517A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Web", "Shop.Web\Shop.Web.csproj", "{0A85FBDC-7371-43E4-9D2A-5367320B789A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A0F51309-DFD1-4C2E-83B4-F7955A004A14}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{4C3DAB3C-1C2C-4CDB-B86E-51A9AF8D74D2}"
@@ -20,31 +16,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GetAssetsService", "GetAsse
 		src\Services\GetAssestsService\main.py = src\Services\GetAssestsService\main.py
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Web", "src\Client\Shop.Web\Shop.Web.csproj", "{C511697B-4561-4A71-83C6-85FB74B42979}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineShop_Api", "src\Services\IdentityService\OnlineShop_Api\OnlineShop_Api.csproj", "{A78CD3DC-4A2D-4C92-8543-897259745473}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D0AE0F9F-2B1C-4A25-B06D-1541827C517A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0AE0F9F-2B1C-4A25-B06D-1541827C517A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0AE0F9F-2B1C-4A25-B06D-1541827C517A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0AE0F9F-2B1C-4A25-B06D-1541827C517A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A85FBDC-7371-43E4-9D2A-5367320B789A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A85FBDC-7371-43E4-9D2A-5367320B789A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A85FBDC-7371-43E4-9D2A-5367320B789A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A85FBDC-7371-43E4-9D2A-5367320B789A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C511697B-4561-4A71-83C6-85FB74B42979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C511697B-4561-4A71-83C6-85FB74B42979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C511697B-4561-4A71-83C6-85FB74B42979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C511697B-4561-4A71-83C6-85FB74B42979}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A78CD3DC-4A2D-4C92-8543-897259745473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A78CD3DC-4A2D-4C92-8543-897259745473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A78CD3DC-4A2D-4C92-8543-897259745473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A78CD3DC-4A2D-4C92-8543-897259745473}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{D0AE0F9F-2B1C-4A25-B06D-1541827C517A} = {4C3DAB3C-1C2C-4CDB-B86E-51A9AF8D74D2}
-		{0A85FBDC-7371-43E4-9D2A-5367320B789A} = {63AF0BCF-BB0D-49A7-8C6E-C50BADF521A6}
 		{4C3DAB3C-1C2C-4CDB-B86E-51A9AF8D74D2} = {70B4CF11-BA2F-4758-BC75-E930CF5FBBEB}
 		{63AF0BCF-BB0D-49A7-8C6E-C50BADF521A6} = {A0F51309-DFD1-4C2E-83B4-F7955A004A14}
 		{70B4CF11-BA2F-4758-BC75-E930CF5FBBEB} = {A0F51309-DFD1-4C2E-83B4-F7955A004A14}
 		{1795391B-3DFA-42B1-80B0-6053D1912D13} = {70B4CF11-BA2F-4758-BC75-E930CF5FBBEB}
+		{C511697B-4561-4A71-83C6-85FB74B42979} = {63AF0BCF-BB0D-49A7-8C6E-C50BADF521A6}
+		{A78CD3DC-4A2D-4C92-8543-897259745473} = {4C3DAB3C-1C2C-4CDB-B86E-51A9AF8D74D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6E9133C-8EDF-4D86-9217-83537AC2108E}
