@@ -1,5 +1,6 @@
 using EventBus;
 using MassTransit;
+using MassTransit.Transports.Fabric;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
@@ -57,11 +58,11 @@ builder.Services.AddMassTransit(x =>
 
     x.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host("rabbitmq://localhost");
-        cfg.ReceiveEndpoint("test-message-queue", e =>
-        {
-            //e.ConfigureConsumer<TestMessageConsumer>(context);
-        });
+        cfg.Host("rabbitmq://localhost"); 
+        //cfg.ReceiveEndpoint("test-message-queue", e =>
+        //{
+        //    e.ConfigureConsumer<TestMessageConsumer>(context);
+        //});
     });
 });
 
