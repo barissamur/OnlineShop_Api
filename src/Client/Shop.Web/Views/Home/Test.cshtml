@@ -1,6 +1,15 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model List<Stock>
+
+<div class="form-group">
+    <label for="stockSelect">Select Stock:</label>
+    <select id="stockSelect" class="form-control">
+        @foreach (var stock in Model)
+        {
+            <option value="@stock.Id">@stock.Name</option>
+        }
+    </select>
+</div>
+
+@section Scripts{ 
+    <script src="~/js/exchange.js"></script>
 }
-<h1>HI</h1>

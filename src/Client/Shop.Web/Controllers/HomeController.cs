@@ -1,9 +1,9 @@
+using EventBus;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Shop.Web;
+using OnlineShop_Api.Messages;
 using Shop.Web.Models;
 using System.Diagnostics;
-using System.Security.Permissions;
 using System.Text;
 
 namespace Shop.Web.Controllers;
@@ -12,12 +12,15 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IHttpClientFactory httpClientFactory;
+    private readonly IEventBus eventBus;
 
     public HomeController(ILogger<HomeController> logger
-        , IHttpClientFactory httpClientFactory)
+        , IHttpClientFactory httpClientFactory
+        , IEventBus eventBus)
     {
         _logger = logger;
         this.httpClientFactory = httpClientFactory;
+        this.eventBus = eventBus;
     }
 
     public IActionResult Index()
@@ -70,12 +73,44 @@ public class HomeController : Controller
     [Security]
     public IActionResult Test()
     {
-        return View();
+        var stocks = new List<Stock>
+        {
+            new Stock { Id = 1, Name = "Apple Inc." },
+            new Stock { Id = 2, Name = "Microsoft Corp." },
+            new Stock { Id = 3, Name = "Amazon.com, Inc." },
+            new Stock { Id = 4, Name = "Tesla, Inc." },
+            new Stock { Id = 5, Name = "Facebook, Inc." },
+            new Stock { Id = 6, Name = "Alphabet Inc." }, // Google'ýn ana þirketi
+            new Stock { Id = 7, Name = "Berkshire Hathaway Inc." },
+            new Stock { Id = 8, Name = "Johnson & Johnson" },
+            new Stock { Id = 9, Name = "JPMorgan Chase & Co." },
+            new Stock { Id = 10, Name = "Visa Inc." },
+            new Stock { Id = 11, Name = "Procter & Gamble Co." },
+            new Stock { Id = 12, Name = "UnitedHealth Group Incorporated" },
+            // Diðer hisseler...
+        };
+
+
+        return View(stocks);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
+    [HttpGet("{controller}/{action}/{exChange}")]
+    public async Task<string> GetExchange(string exChange)
+    { 
+        var testMessage = new TestMessage()
+        {
+            Content = exChange
+        };
+
+          
+        await eventBus.PublishAsync(testMessage);
+
+        return "asd";
     }
 }
