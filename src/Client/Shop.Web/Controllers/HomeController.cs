@@ -48,7 +48,7 @@ public class HomeController : Controller
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await client.PostAsync("https://localhost:44350/login?useCookies=true", content);
+        var response = await client.PostAsync("http://localhost:5005/login?useCookies=true", content);
 
         string cookie = response.Headers.NonValidated["Set-Cookie"].ToString();
         string[] sa = cookie.Split('=');

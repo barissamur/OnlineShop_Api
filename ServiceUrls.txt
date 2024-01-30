@@ -1,0 +1,7 @@
+
+
+GetAssetsService		-> Python
+
+Web.ApiGateway			-> http://localhost:5000
+  
+IdentityService.Api		-> http://localhost:5005

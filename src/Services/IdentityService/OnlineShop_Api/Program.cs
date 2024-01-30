@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 
 // eklendi
 
-builder.WebHost.UseUrls("http://*:2021");
+builder.WebHost.UseUrls("http://*:5005");
 
 builder.Services.AddCors(options =>
 {

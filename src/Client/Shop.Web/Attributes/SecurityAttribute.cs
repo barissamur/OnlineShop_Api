@@ -25,7 +25,7 @@ namespace Shop.Web
             var handler = new HttpClientHandler();
             var cookieContainer = new CookieContainer();
             handler.CookieContainer = cookieContainer;
-            var uri = new Uri("https://localhost:44350/WeatherForecast"); // Cookie'nin ilişkilendirileceği URL
+            var uri = new Uri("http://localhost:5005/WeatherForecast"); // Cookie'nin ilişkilendirileceği URL
             cookieContainer.Add(uri, new Cookie(".AspNetCore.Identity.Application", cookie)); // Cookie adı ve değeri
 
             using (var client = new HttpClient(handler))

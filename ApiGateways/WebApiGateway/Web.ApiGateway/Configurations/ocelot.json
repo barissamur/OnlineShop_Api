@@ -1,0 +1,18 @@
+{
+  "Routes": [
+    { 
+      "DownstreamPathTemplate": "/weatherForecast",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ],
+
+      "UpstreamPathTemplate": "/weatherForecast",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ],
+      "UpstreamScheme": "http"
+    }
+  ]
+}
