@@ -1,3 +1,4 @@
+using Consul;
 using EventBus;
 using MassTransit;
 using MassTransit.Transports.Fabric;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Microsoft.OpenApi.Models;
 using OnlineShop_Api.Data;
+using OnlineShop_Api.Extensions;
 using OnlineShop_Api.Messages;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -16,8 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-// eklendi
 
+// eklendi
 builder.WebHost.UseUrls("http://*:5005");
 
 builder.Services.AddCors(options =>
@@ -58,7 +60,7 @@ builder.Services.AddMassTransit(x =>
 
     x.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host("rabbitmq://localhost"); 
+        cfg.Host("rabbitmq://localhost");
         //cfg.ReceiveEndpoint("test-message-queue", e =>
         //{
         //    e.ConfigureConsumer<TestMessageConsumer>(context);
@@ -70,6 +72,9 @@ builder.Services.AddMassTransit(x =>
 builder.Services.AddSingleton<IEventBus, RabbitMQEventBus>();
 builder.Services.AddSingleton<IEventBus, AzureServiceBusEventBus>();
 
+//ocelot ayarlarý
+builder.Services.ConfigureConsul(builder.Configuration);
+ 
 
 // log ayarlarý
 builder.Logging.AddConsole();
@@ -90,7 +95,15 @@ app.UseCors("AllowAllOrigins"); // ConfigureServices'da tanýmladýðýnýz CORS poli
 
 app.MapIdentityApi<IdentityUser>();
 
+// consul register
+// Uygulama ömrünü yönetmek için IHostApplicationLifetime alýn
+var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+
+// Consul ile kayýt iþlemi
+app.RegisterWithConsul(lifetime, builder.Configuration);
+
 //
+
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();

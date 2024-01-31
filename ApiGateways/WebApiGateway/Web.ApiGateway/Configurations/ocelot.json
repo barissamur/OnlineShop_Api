@@ -1,18 +1,41 @@
 {
   "Routes": [
-    { 
+    {
+      "UseServiceDiscovery": true,
+      "ServiceName": "IdentityService",
       "DownstreamPathTemplate": "/weatherForecast",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
+      "DownstreamHostAndPorts": [],
 
       "UpstreamPathTemplate": "/weatherForecast",
       "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ],
       "UpstreamScheme": "http"
+    },
+    {
+      "ServiceName": "PythonGetAssetesService",
+      "DownstreamPathTemplate": "/health",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "192.168.1.25",
+          "Port": 5006
+        }
+      ],
+
+      "UpstreamPathTemplate": "/health",
+      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put" ],
+      "UpstreamScheme": "http"
     }
-  ]
+  ],
+
+  "GlobalConfiguration": {
+    //"BaseUrl": "http://webapigateway.api:5000",
+    "BaseUrl": "http://localhost:5000",
+    "ServiceDiscoveryProvider": {
+      //"Host": "c_consul",
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  }
 }
