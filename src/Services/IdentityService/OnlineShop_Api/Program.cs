@@ -1,15 +1,10 @@
-using Consul;
 using EventBus;
 using MassTransit;
-using MassTransit.Transports.Fabric;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using Microsoft.OpenApi.Models;
 using OnlineShop_Api.Data;
 using OnlineShop_Api.Extensions;
-using OnlineShop_Api.Messages;
-using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 

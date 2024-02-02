@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
     <UserSecretsId>cedd049e-5d1b-4c1f-8f26-b24077a605e1</UserSecretsId>
@@ -30,8 +30,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\EventBus\EventBus.csproj" />
+  <ItemGroup> 
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
   </ItemGroup>
 

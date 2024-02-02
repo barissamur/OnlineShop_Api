@@ -2,6 +2,7 @@ using EventBus;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineShop_Api.Messages;
+using Shop.Web.Messages;
 using Shop.Web.Models;
 using System.Diagnostics;
 using System.Text;
@@ -100,17 +101,28 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    [HttpGet("{controller}/{action}/{exChange}")]
-    public async Task<string> GetExchange(string exChange)
-    { 
+    [HttpGet("{controller}/{action}/{stock}")]
+    public async Task<IActionResult> GetStock()
+    {
+        return View();
+    }
+
+
+    [HttpPost("{controller}/{action}")]
+    public async Task<string> GetStock([FromBody] StockRequest request)
+    {
         var testMessage = new TestMessage()
         {
-            Content = exChange
+            Content = request.Stock
         };
 
-          
         await eventBus.PublishAsync(testMessage);
 
         return "asd";
-    }
+    } 
+}
+
+public class StockRequest
+{
+    public string Stock { get; set; }
 }

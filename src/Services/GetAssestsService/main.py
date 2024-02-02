@@ -2,6 +2,8 @@ import threading
 from flask import Flask
 import pika
 import consul
+import yfinance as yf
+import json
 
 app = Flask(__name__)
 
@@ -30,8 +32,35 @@ def start_rabbitmq_consumer():
     channel.queue_bind(exchange=exchange_name, queue=queue_name)
 
     def callback(ch, method, properties, body):
-        print(f" [x] Received {body}")
+        # Gelen mesajı str olarak decode et ve JSON'a çevir
+        # JSON içeriğini Python sözlüğüne dönüştür
+        data = json.loads(body)
 
+        # 'message' anahtarındaki 'content' değerini al
+        content = data["message"]["content"]
+
+        stock_symbol = "BTC-USD"  # Bitcoin'in sembolü
+        # yfinance ile fiyatı sorgula
+        stock = yf.Ticker(stock_symbol)
+        stock_info = stock.info
+        price = stock_info.get("regularMarketPrice", "Price not found")
+
+        # Fiyat bilgisini RabbitMQ'ya geri gönder
+        response_message = json.dumps(
+            {"Content": "Bitcoin'in güncel fiyatı: 12345 USD"}
+        )
+        print(response_message)
+        channel.basic_publish(
+            exchange="",
+            routing_key="result_stock",
+            body=response_message,
+            properties=pika.BasicProperties(
+                content_type="application/json",  # MassTransit'in beklediği content type
+                # Diğer gereken header veya properties ayarları burada yapılabilir
+            ),
+        )
+
+    # test
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
     print(" [*] Waiting for messages. To exit press CTRL+C")
     channel.start_consuming()
@@ -61,7 +90,7 @@ if __name__ == "__main__":
     c.agent.service.register(
         "PythonGetAssetesService",
         service_id="PythonGetAssetes",
-        address="192.168.1.25",  # localhost yerine localhost kullanılıyor
+        address="192.168.1.25",  # localhost yerine ipv4
         port=5006,
         check=consul.Check.http(
             "http://192.168.1.25:5006/health",  # Sağlık kontrolü için adres güncellendi

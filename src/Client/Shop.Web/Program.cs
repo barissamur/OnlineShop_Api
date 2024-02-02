@@ -1,5 +1,7 @@
+
 using EventBus;
 using MassTransit;
+using Shop.Web.Messages;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,20 +13,31 @@ builder.Services.AddHttpClient();
 //event bus ayarlarý 
 builder.Services.AddMassTransit(x =>
 {
-    //x.AddConsumer<TestMessageConsumer>();
+    // consumerlarý ekle
+    x.AddConsumer<StockMessageConsumer>();
 
+    // publish sýnýfýndan kalýtým almayan bir consumer olup olmadýðýný kontrol et
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host("rabbitmq://localhost");
-        //cfg.ReceiveEndpoint("test-message-queue", e =>
-        //{
-        //    e.ConfigureConsumer<TestMessageConsumer>(context);
-        //});
+
+        // hangi kuyruða hangi sýnýf consumer olacak
+        cfg.ReceiveEndpoint("result_stock", e =>
+        {
+            e.UseRawJsonSerializer(); // dýþardan gelen json formatýný serialize et
+            e.ConfigureConsumer<StockMessageConsumer>(context);
+        });
     });
 });
 
 builder.Services.AddSingleton<IEventBus, RabbitMQEventBus>();
 builder.Services.AddSingleton<IEventBus, AzureServiceBusEventBus>();
+
+// log ayarlarý
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+//
 
 var app = builder.Build();
 
@@ -36,7 +49,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
