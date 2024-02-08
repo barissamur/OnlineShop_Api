@@ -2,6 +2,7 @@
 using EventBus;
 using MassTransit;
 using Shop.Web.Messages;
+using Shop.Web.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
+
+// SignalR'ý ekleyin
+builder.Services.AddSignalR();
 
 //event bus ayarlarý 
 builder.Services.AddMassTransit(x =>
@@ -59,5 +63,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// SignalR hub'ýný yapýlandýrýn
+app.MapHub<StockHub>("/stockHub"); 
 
 app.Run();

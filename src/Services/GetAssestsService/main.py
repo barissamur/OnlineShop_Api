@@ -52,7 +52,7 @@ def start_rabbitmq_consumer():
         print(response_message)
         channel.basic_publish(
             exchange="",
-            routing_key="result_stock",
+            routing_key="result_stock",  # gönderdiğimmiz kuyruk
             body=response_message,
             properties=pika.BasicProperties(
                 content_type="application/json",  # MassTransit'in beklediği content type
@@ -60,7 +60,7 @@ def start_rabbitmq_consumer():
             ),
         )
 
-    # test
+    # consumer
     channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
     print(" [*] Waiting for messages. To exit press CTRL+C")
     channel.start_consuming()

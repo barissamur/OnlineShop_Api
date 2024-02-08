@@ -109,7 +109,7 @@ public class HomeController : Controller
 
 
     [HttpPost("{controller}/{action}")]
-    public async Task<string> GetStock([FromBody] StockRequest request)
+    public async Task<IActionResult> GetStock([FromBody] StockRequest request)
     {
         var testMessage = new TestMessage()
         {
@@ -118,8 +118,8 @@ public class HomeController : Controller
 
         await eventBus.PublishAsync(testMessage);
 
-        return "asd";
-    } 
+        return Ok(testMessage);
+    }
 }
 
 public class StockRequest

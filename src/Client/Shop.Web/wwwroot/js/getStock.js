@@ -16,12 +16,10 @@ const getStock = () => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            // Yanıtı JSON olarak dönüştür
+
             return response.json();
         })
-        .then(data => {
-            // Elde edilen veriyi işle
-            console.log(data);
+        .then(data => { 
         })
         .catch(error => {
             // Hata durumunda hata mesajını göster
@@ -29,4 +27,17 @@ const getStock = () => {
         });
 }
 
-selectStock.change(getStock);
+selectStock.on('change', getStock);
+
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/stockHub")
+    .build();
+
+connection.on("ReceiveMessage", function (message) {
+    $('#showPrice').text(message);
+    // Burada mesajı arayüzde göstermek için ilgili kodu yazabilirsiniz.
+});
+
+connection.start().catch(function (err) {
+    return console.error(err.toString());
+});

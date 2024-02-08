@@ -67,9 +67,9 @@ builder.Services.AddMassTransit(x =>
 builder.Services.AddSingleton<IEventBus, RabbitMQEventBus>();
 builder.Services.AddSingleton<IEventBus, AzureServiceBusEventBus>();
 
-//ocelot ayarlarý
+//ocelot consul register ayarlarý
 builder.Services.ConfigureConsul(builder.Configuration);
- 
+
 
 // log ayarlarý
 builder.Logging.AddConsole();
@@ -90,7 +90,7 @@ app.UseCors("AllowAllOrigins"); // ConfigureServices'da tanýmladýðýnýz CORS poli
 
 app.MapIdentityApi<IdentityUser>();
 
-// consul register
+// ocelot consul register
 // Uygulama ömrünü yönetmek için IHostApplicationLifetime alýn
 var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
 
