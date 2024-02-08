@@ -75,6 +75,8 @@ builder.Services.ConfigureConsul(builder.Configuration);
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
+//redis ayarlarý
+builder.Services.AddSingleton(sp => sp.ConfigureRedis(builder.Configuration));
 //
 var app = builder.Build();
 
@@ -85,6 +87,8 @@ app.UseSwaggerUI();
 
 
 //eklendi
+
+//redis ayarlarý 
 app.UseCors("AllowAllOrigins"); // ConfigureServices'da tanýmladýðýnýz CORS politikasýnýn adýný buraya ekleyin
 
 
